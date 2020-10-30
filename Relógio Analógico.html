@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rélogio Analógico</title>
+<style>
+    
+body {
+    background-color: rgb(75, 156, 152);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.relógio {
+    width: 800px;
+    height: 800px;
+    background-color: rgb(214, 208, 208);
+    border: 10px solid black;
+    border-radius: 50%;
+    position: relative;
+}
+
+.relógio .numero {
+    --rotation: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font: normal 28pt Arial;
+    text-align: center;
+    transform: rotate(var(--rotation));
+    font-size: 3.5rem;
+}
+
+.relógio .numero1 { --rotation: 30deg; }
+.relógio .numero2 { --rotation: 60deg; }
+.relógio .numero3 { --rotation: 90deg; }
+.relógio .numero4 { --rotation: 120deg; }
+.relógio .numero5 { --rotation: 150deg; }
+.relógio .numero6 { --rotation: 180deg; }
+.relógio .numero7 { --rotation: 210deg; }
+.relógio .numero8 { --rotation: 240deg; }
+.relógio .numero9 { --rotation: 270deg; }
+.relógio .numero10 { --rotation: 300deg; }
+.relógio .numero11 { --rotation: 330deg; }
+
+.relógio .ponteiro {
+    --rotation: 0;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    border: 1px solid pink;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transform-origin: bottom;
+    z-index: 10;
+    transform: translateX(-50%) rotate(calc(var(--rotation) * 1deg));
+}
+
+.relógio .centro {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: 10;
+    background-color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid white;
+    border-radius: 50%;
+
+}
+.relógio .ponteiro.horas {
+    width: 12px;
+    height: 35%;
+    background-color: black;
+}
+
+.relógio .ponteiro.minutos {
+    width: 8px;
+    height: 40%;
+    background-color: black;
+}
+
+.relógio .ponteiro.segundos {
+    width: 4px;
+    height: 45%;
+    background-color: red;
+}
+
+
+</style>
+
+</head>
+
+<body>
+    <div class="relógio">
+        <div class="ponteiro horas" data-horas-ponteiro></div>
+        <div class="ponteiro minutos" data-minutos-ponteiro></div>
+        <div class="ponteiro segundos" data-segundos-ponteiro></div>
+        <div class="centro"></div>
+        <div class="numero numero1">1</div>
+        <div class="numero numero2">2</div>
+        <div class="numero numero3">3</div>
+        <div class="numero numero4">4</div>
+        <div class="numero numero5">5</div>
+        <div class="numero numero6">6</div>
+        <div class="numero numero7">7</div>
+        <div class="numero numero8">8</div>
+        <div class="numero numero9">9</div>
+        <div class="numero numero10">10</div>
+        <div class="numero numero11">11</div>
+        <div class="numero numero12">12</div>
+    </div>
+
+<script>
+
+setInterval(setClock, 1000)
+
+let horasponteiro = document.querySelector('[data-horas-ponteiro]')
+let minutosponteiro = document.querySelector('[data-minutos-ponteiro]')
+let segundosponteiro = document.querySelector('[data-segundos-ponteiro]')
+
+function setClock() {
+    let currentDate = new Date()
+    let segundosX = currentDate.getSeconds() / 60
+    let minutosX = (segundosX + currentDate.getMinutes()) / 60
+    let horasX = (minutosX + currentDate.getHours()) / 12
+    setRotation(segundosponteiro, segundosX)
+    setRotation(minutosponteiro, minutosX)
+    setRotation(horasponteiro, horasX)
+}    
+
+function setRotation(element, rotationRatio) {
+    element.style.setProperty('--rotation', rotationRatio * 360)
+}
+
+setClock()
+</script>
+</body>
+</html>
